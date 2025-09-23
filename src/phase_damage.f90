@@ -30,6 +30,10 @@ submodule(phase) damage
       logical, dimension(:), allocatable :: mySources
     end function isobrittle_init
 
+    module function voidgrowth_init() result(mySources)
+      logical, dimension(:), allocatable :: mySources
+    end function voidgrowth_init
+
 
     module subroutine isobrittle_deltaState(C, Fe, ph, en)
       integer, intent(in) :: ph,en
@@ -38,6 +42,14 @@ submodule(phase) damage
       real(pREAL),  intent(in), dimension(6,6) :: &
         C
     end subroutine isobrittle_deltaState
+
+    module subroutine voidgrowth_deltaState(C, Fe, ph, en)
+      integer, intent(in) :: ph,en
+      real(pREAL),  intent(in), dimension(3,3) :: &
+        Fe
+      real(pREAL),  intent(in), dimension(6,6) :: &
+        C
+    end subroutine voidgrowth_deltaState
 
 
     module subroutine anisobrittle_dotState(M_i, ph, en)
@@ -56,6 +68,11 @@ submodule(phase) damage
       integer,          intent(in) :: phase
       character(len=*), intent(in) :: group
     end subroutine isobrittle_result
+
+    module subroutine voidgrowth_result(phase,group)
+      integer,          intent(in) :: phase
+      character(len=*), intent(in) :: group
+    end subroutine voidgrowth_result
 
  end interface
 
@@ -124,6 +141,7 @@ module subroutine damage_init()
 
   where(isobrittle_init()  ) damage_type = DAMAGE_ISOBRITTLE
   where(anisobrittle_init()) damage_type = DAMAGE_ANISOBRITTLE
+  where(voidgrowth_init()  ) damage_type = DAMAGE_VOIDGROWTH
   phase_damage_maxSizeDotState = maxval(damageState%sizeDotState)
 
   if (damage_active) then
@@ -172,7 +190,7 @@ module function phase_damage_C66(C66,ph,en) result(C66_degraded)
 
 
   damageType: select case (damage_type(ph))
-    case (DAMAGE_ISOBRITTLE) damageType
+    case (DAMAGE_ISOBRITTLE, DAMAGE_VOIDGROWTH) damageType
       C66_degraded = C66 * damage_phi(ph,en)**2
     case default damageType
       C66_degraded = C66
@@ -221,7 +239,7 @@ module function phase_f_phi(phi,co,ce) result(f)
   en = material_entry_phase(co,ce)
 
   select case(damage_type(ph))
-    case(DAMAGE_ISOBRITTLE,DAMAGE_ANISOBRITTLE)
+    case(DAMAGE_ISOBRITTLE,DAMAGE_ANISOBRITTLE,DAMAGE_VOIDGROWTH)
       f = 1.0_pREAL &
         - 2.0_pREAL * phi*damageState(ph)%state(1,en)                                               ! ToDo: MD: seems to be phi**2
     case default
@@ -331,7 +349,7 @@ module subroutine damage_restartWrite(groupHandle,ph)
 
 
   select case(damage_type(ph))
-    case(DAMAGE_ISOBRITTLE,DAMAGE_ANISOBRITTLE)
+    case(DAMAGE_ISOBRITTLE,DAMAGE_ANISOBRITTLE,DAMAGE_VOIDGROWTH)
       call HDF5_write(damageState(ph)%state,groupHandle,'omega_damage')
   end select
 
@@ -345,7 +363,7 @@ module subroutine damage_restartRead(groupHandle,ph)
 
 
   select case(damage_type(ph))
-    case(DAMAGE_ISOBRITTLE,DAMAGE_ANISOBRITTLE)
+    case(DAMAGE_ISOBRITTLE,DAMAGE_ANISOBRITTLE,DAMAGE_VOIDGROWTH)
   call HDF5_read(damageState(ph)%state0,groupHandle,'omega_damage')
   end select
 
@@ -372,6 +390,9 @@ module subroutine damage_result(group,ph)
 
     case (DAMAGE_ANISOBRITTLE) sourceType
       call anisobrittle_result(ph,group//'damage/')
+
+    case (DAMAGE_VOIDGROWTH) sourceType
+      call voidgrowth_result(ph,group//'damage/')
 
   end select sourceType
 
@@ -468,6 +489,16 @@ function phase_damage_deltaState(Fe, ph, en) result(status)
         damageState(ph)%state(myOffset + 1: myOffset + mySize,en) = &
         damageState(ph)%state(myOffset + 1: myOffset + mySize,en) + damageState(ph)%deltaState(1:mySize,en)
       end if
+    case (DAMAGE_VOIDGROWTH) sourceType
+      call voidgrowth_deltaState(phase_homogenizedC66(ph,en), Fe, ph,en)
+      if (any(IEEE_is_NaN(damageState(ph)%deltaState(:,en)))) status = STATUS_FAIL_PHASE_DAMAGE_DELTASTATE
+      if (status == STATUS_OK) then
+        myOffset = damageState(ph)%offsetDeltaState
+        mySize   = damageState(ph)%sizeDeltaState
+        damageState(ph)%state(myOffset + 1: myOffset + mySize,en) = &
+        damageState(ph)%state(myOffset + 1: myOffset + mySize,en) + damageState(ph)%deltaState(1:mySize,en)
+      end if
+
 
   end select sourceType
 
