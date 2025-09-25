@@ -1,0 +1,121 @@
+homogenization:
+  SX:
+    N_constituents: 1
+    damage:
+      output: [phi]
+      type: pass
+    mechanical: {type: pass}
+phase:
+  voidgrowth:
+    lattice: cF
+    mechanical:
+      output: [F, F_i, P]
+      elastic: {C_11: 168.9e9, C_12: 121.8e9, C_44: 75.8e9, type: Hooke}
+      plastic: {type: none}
+    damage:
+      G_crit: 800000000.0
+      output: [r_W]
+      type: voidgrowth
+      l_c: 2.0
+      mu: 0.001
+material:
+- constituents:
+  - phase: voidgrowth
+    O: [0.5469583375584418, 0.40992038017692456, 0.09290853566378776, 0.723995761653148]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.9565909471944903, -0.15838632114176884, -0.018565703549529473, -0.24393205544256638]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.21921118618322782, 0.03424350068275728, 0.8425733887118506, 0.49075851816118393]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.689114015069119, -0.3107288462775991, -0.1119256178577705, 0.6450132668352384]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.5615984297540864, 0.7029843498965308, -0.3002442661333013, 0.3166600513995599]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.8387364660513015, -0.15361251337981496, -0.5148564464814153, -0.08858428622187905]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.26598001938597443, -0.8853649511555357, -0.3042699083430502, -0.2297898070622464]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.9968241627233485, 0.012635540070023633, 0.06862258308288054, -0.03837802534090505]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.7081557736793633, 0.17556575459714027, 0.5998139152012173, -0.3285046927340704]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.2642909946279794, -0.05505312169637943, -0.5591486422008387, 0.7838827845252092]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.7311286228522808, -0.22784539584454633, -0.5659257878117708, 0.3053938688451292]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.7282646209925271, -0.1739790864327124, 0.6474581304275159, 0.14198552263507555]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.1147501399746538, -0.286325529221371, 0.6036630272804508, 0.7351469555037965]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.6638807397837926, 0.5385748564943579, -0.2607101908946485, -0.4485863168442412]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.367986584302667, -0.8447319639401678, -0.38715409175688786, -0.03354835475760831]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.05269705291062981, -0.26962343601783767, -0.5633704924335977, -0.7791918323619639]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.7529011663614533, -0.39518851280089506, 0.26528477640247733, -0.454521573141328]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.205400717032337, 0.6811751652693036, 0.5058243134493627, -0.48780396019960687]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.6733004509148187, 0.5340151309395228, -0.5059174011452137, -0.07444411289026878]
+    v: 1.0
+  homogenization: SX
+- constituents:
+  - phase: voidgrowth
+    O: [0.37854865448637676, 0.1337978981001687, -0.19936118163953287, 0.8938982928196136]
+    v: 1.0
+  homogenization: SX

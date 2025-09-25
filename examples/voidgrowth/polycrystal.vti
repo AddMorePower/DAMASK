@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<VTKFile type="ImageData" version="0.1" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">
+  <ImageData WholeExtent="0 128 0 128 0 1" Origin="0 0 0" Spacing="1 1 1" Direction="1 0 0 0 1 0 0 0 1">
+    <FieldData>
+      <Array type="String" Name="comments" NumberOfTuples="1" format="binary">
+        AQAAAACAAABbAAAAXwAAAA==eF4FwVsKgCAQBdCW4mcRym3M6bGBdtBvCFlI2YBG6++c3SdfLrMESUuOuzmypG2VLI/E7Q2lhPv2b5RHfdbAQI+d02dveXI8WKiaQE5j0tQr8Ew8d9yCgKb6AYS1Gik=
+      </Array>
+    </FieldData>
+  <Piece Extent="0 128 0 128 0 1">
+    <PointData>
+    </PointData>
+    <CellData>
+      <DataArray type="Int64" Name="material" format="binary" RangeMin="0" RangeMax="19">
+        BAAAAACAAAAAAAAAbQIAAK4BAADdAQAAqAIAAA==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
+      </DataArray>
+      <DataArray type="Int64" Name="phi" format="binary" RangeMin="1" RangeMax="1">
+        BAAAAACAAAAAAAAASQAAAEkAAABJAAAASQAAAA==eF7txTEBAAAMAqDZv/QOYwgPuYpt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt28M//AAQAXhe7cUxAQAADAKg2b/0DmMID7mKbdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdvDP/wAEAF4Xu3FMQEAAAwCoNm/9A5jCA+5im3btm3btm3btm3btm3btm3btm3btm3btm3btm3btm3btm3btm3btm3btm3btm3bwz/8ABABeF7txTEBAAAMAqDZv/QOYwgPuYpt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt27Zt28M//AAQAQ==
+      </DataArray>
+    </CellData>
+  </Piece>
+  </ImageData>
+</VTKFile>
